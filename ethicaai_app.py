@@ -9,12 +9,14 @@ st.set_page_config(page_title="EthicaAI - Bias Detection Tool", layout="wide")
 st.title("🤖 EthicaAI Bias Audit Tool")
 st.write("Upload your dataset and we'll check it for demographic bias in your model's decisions.")
 
-uploaded_file = st.file_uploader("📂 Upload your CSV file", type=["csv"])
+uploaded_file = st.file_uploader("📂 Upload your xlsx or xls file", type=["csv"])
 
-if uploaded_file is not None:
-    df = pd.read_csv(uploaded_file)
-    st.write("### 🧾 Preview of your data:")
-    st.dataframe(df.head())
+uploaded_file = st.file_uploader("Upload an Excel file", type=["xlsx", "xls"])
+import pandas as pd
+if uploaded_file:
+    df = pd.read_excel(uploaded_file)
+    st.dataframe(df)
+
 
     label_col = st.selectbox("✅ Choose your target column (e.g. hired, approved)", df.columns)
     score_col = st.selectbox("📈 Choose your model score/confidence column (if any)", df.columns)
